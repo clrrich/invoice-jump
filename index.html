@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳转...</title>
+    <style>
+        /* 简单的样式，用于在微信里显示引导图 */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #f2f2f2; font-family: sans-serif; }
+        .wx-guide { display: none; /* 默认隐藏，JS判断是微信才显示 */ text-align: center; padding-top: 20px; }
+        .arrow-icon { width: 100px; position: absolute; top: 10px; right: 20px; }
+        .text-box { margin-top: 80px; padding: 20px; }
+        h2 { color: #333; margin-bottom: 10px; }
+        p { color: #666; font-size: 14px; line-height: 1.6; }
+        .url-display { background: #fff; padding: 10px; border-radius: 5px; margin-top: 20px; color: #999; font-size: 12px; word-break: break-all;}
+    </style>
+</head>
+<body>
+
+    <!-- 微信内的引导层 -->
+    <div id="guide" class="wx-guide">
+        <div class="text-box">
+            <h2>请在浏览器打开</h2>
+            <p>由于微信限制，请点击屏幕右上角 <strong>[...]</strong></p>
+            <p>选择 <strong>[在浏览器打开]</strong> 即可上传发票</p>
+            <div class="url-display">即将访问：<br>183.236.108.202:7003</div>
+        </div>
+    </div>
+
+    <div id="loading" style="text-align:center; padding-top:50px; display:none;">
+        正在进入系统...
+    </div>
+
+    <script>
+        // 这里填你的真实IP地址
+        const targetUrl = 'https://183.236.108.202:7003/';
+
+        // 判断是否在微信浏览器内
+        const isWechat = /MicroMessenger/i.test(window.navigator.userAgent);
+
+        if (isWechat) {
+            // 如果是微信，显示引导层
+            document.getElementById('guide').style.display = 'block';
+        } else {
+            // 如果不是微信（说明用户已经用浏览器打开了），显示加载中并立即跳转
+            document.getElementById('loading').style.display = 'block';
+            
+            // 立即跳转到目标IP
+            window.location.replace(targetUrl);
+        }
+    </script>
+</body>
+</html>
